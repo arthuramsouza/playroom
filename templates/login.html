@@ -2,6 +2,7 @@
 {% block content %}
     <form action="/authenticate" method="post">
         <fieldset>
+            <input type="hidden" name="next_page" value="{{ next_page or '' }}"/>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" class="form-control" required/>

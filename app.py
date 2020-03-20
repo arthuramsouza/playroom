@@ -22,18 +22,20 @@ def index():
 
 @app.route('/login')
 def login():
-    return render_template('login.html', title='Login')
+    next_page = request.args.get('next_page')
+    return render_template('login.html', title='Login', next_page=next_page)
 
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
+    next_page = request.form['next_page']
     if request.form['password'] == 'admin':
         session['logged_user'] = request.form['username']
-        flash(request.form['username'] + ', you are now logged in!', 'success')
-        return redirect('/')
+        flash('{}, you are now logged in!'.format(request.form['username']), 'success')
+        return redirect('/{}'.format(next_page))
     else:
         flash('Something went wrong. Please, check your credentials and try again.', 'danger')
-        return redirect('/login')
+        return redirect('/login?next_page=new')
 
 
 @app.route('/logout')
@@ -45,6 +47,9 @@ def logout():
 
 @app.route('/new')
 def new():
+    if 'logged_user' not in session or session['logged_user'] is None:
+        flash('You must login before creating a new game.', 'danger')
+        return redirect('/login?next_page=new')
     return render_template('new.html', title='New game')
 
 
