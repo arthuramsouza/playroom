@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
@@ -32,24 +32,24 @@ def authenticate():
     if request.form['password'] == 'admin':
         session['logged_user'] = request.form['username']
         flash('{}, you are now logged in!'.format(request.form['username']), 'success')
-        return redirect('/{}'.format(next_page))
+        return redirect(next_page)
     else:
         flash('Something went wrong. Please, check your credentials and try again.', 'danger')
-        return redirect('/login?next_page=new')
+        return redirect(url_for('login', next_page=url_for('new')))
 
 
 @app.route('/logout')
 def logout():
     session['logged_user'] = None
     flash('You are now logged out', 'success')
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @app.route('/new')
 def new():
     if 'logged_user' not in session or session['logged_user'] is None:
         flash('You must login before creating a new game.', 'danger')
-        return redirect('/login?next_page=new')
+        return redirect(url_for('login', next_page=url_for('new')))
     return render_template('new.html', title='New game')
 
 
@@ -59,7 +59,7 @@ def create():
     genre = request.form['genre']
     platform = request.form['platform']
     game_list.append(Game(name, genre, platform))
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

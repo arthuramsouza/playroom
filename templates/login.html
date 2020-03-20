@@ -1,8 +1,8 @@
 {% extends "template.html" %}
 {% block content %}
-    <form action="/authenticate" method="post">
+    <form action="{{ url_for('authenticate') }}" method="post">
         <fieldset>
-            <input type="hidden" name="next_page" value="{{ next_page or '' }}"/>
+            <input type="hidden" name="next_page" value="{{ next_page or url_for('index') }}"/>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" class="form-control" required/>
