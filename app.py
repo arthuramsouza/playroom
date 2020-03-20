@@ -18,6 +18,19 @@ def index():
     return render_template('list.html', title='Playroom', games=game_list)
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html', title='Login')
+
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate():
+    if request.form['password'] == 'admin':
+        return redirect('/')
+    else:
+        return redirect('/login')
+
+
 @app.route('/new')
 def new():
     return render_template('new.html', title='New game')
