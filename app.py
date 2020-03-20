@@ -12,7 +12,23 @@ class Game:
         self.platform = platform
 
 
-game_list = [Game('Halo 2', 'Sci-fi', 'Xbox'), Game('Red Dead Redemption', 'Action', 'Xbox 360')]
+class User:
+    def __init__(self, username, name, password):
+        self.username = username
+        self.name = name
+        self.password = password
+
+
+user1 = User('arthur', 'Arthur Menezes', '1234')
+user2 = User('admin', 'Admin', 'admin')
+user3 = User('masterchief', 'John-117', 'cortana')
+
+users = {user1.username: user1,
+         user2.username: user2,
+         user3.username: user3}
+
+game_list = [Game('Halo 2', 'Sci-fi', 'Xbox'),
+             Game('Red Dead Redemption', 'Action', 'Xbox 360')]
 
 
 @app.route('/')
@@ -29,10 +45,12 @@ def login():
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
     next_page = request.form['next_page']
-    if request.form['password'] == 'admin':
-        session['logged_user'] = request.form['username']
-        flash('{}, you are now logged in!'.format(request.form['username']), 'success')
-        return redirect(next_page)
+    if request.form['username'] in users:
+        user = users[request.form['username']]
+        if request.form['password'] == user.password:
+            session['logged_user'] = user.username
+            flash('{}, you are now logged in!'.format(user.name), 'success')
+            return redirect(next_page)
     else:
         flash('Something went wrong. Please, check your credentials and try again.', 'danger')
         return redirect(url_for('login', next_page=url_for('new')))
