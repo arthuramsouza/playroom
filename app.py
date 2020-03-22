@@ -20,13 +20,10 @@ users = {user1.username: user1,
          user2.username: user2,
          user3.username: user3}
 
-game_list = [Game('Halo 2', 'Sci-fi', 'Xbox'),
-             Game('Red Dead Redemption', 'Action', 'Xbox 360')]
-
 
 @app.route('/')
 def index():
-    return render_template('list.html', title='Playroom', games=game_list)
+    return render_template('list.html', title='Playroom', games=game_dao.list())
 
 
 @app.route('/login')
