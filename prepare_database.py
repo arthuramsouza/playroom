@@ -33,7 +33,7 @@ cursor.executemany(
       [
             ('arthur', 'Arthur Menezes', '1234'),
             ('admin', 'Admin', 'admin'),
-            ('masterchief', 'John-117', 'cortana')
+            ('john-117', 'Master Chief', 'cortana')
       ])
 
 cursor.execute('select * from playroom.user')
@@ -47,11 +47,11 @@ cursor.executemany(
       [
             ('Halo 2', 'Sci-fi', 'Xbox'),
             ('Red Dead Redemption', 'Action', 'Xbox 360'),
-            ('NBA 2k18', 'Esporte', 'Xbox One'),
+            ('NBA 2k18', 'Sports', 'Xbox One'),
             ('Rayman Legends', 'Indie', 'PS4'),
             ('Super Mario RPG', 'RPG', 'SNES'),
-            ('Super Mario Kart', 'Corrida', 'SNES'),
-            ('Fire Emblem Echoes', 'Estratégia', '3DS'),
+            ('Super Mario Kart', 'Racing', 'SNES'),
+            ('Fire Emblem Echoes', 'Strategy', '3DS'),
       ])
 
 cursor.execute('select * from playroom.game')

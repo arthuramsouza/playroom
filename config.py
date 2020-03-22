@@ -1,0 +1,5 @@
+MYSQL_HOST = '0.0.0.0'
+MYSQL_PORT = 3306
+MYSQL_DB = 'playroom'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'admin'

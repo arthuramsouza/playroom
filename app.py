@@ -1,23 +1,16 @@
 import os
 from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask_mysqldb import MySQL
+
+from dao import GameDAO
+from models import Game, User
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
+app.config.from_object('config')
+db = MySQL(app)
 
-
-class Game:
-    def __init__(self, name, genre, platform):
-        self.name = name
-        self.genre = genre
-        self.platform = platform
-
-
-class User:
-    def __init__(self, username, name, password):
-        self.username = username
-        self.name = name
-        self.password = password
-
+game_dao = GameDAO(db)
 
 user1 = User('arthur', 'Arthur Menezes', '1234')
 user2 = User('admin', 'Admin', 'admin')
@@ -76,7 +69,7 @@ def create():
     name = request.form['name']
     genre = request.form['genre']
     platform = request.form['platform']
-    game_list.append(Game(name, genre, platform))
+    game_dao.save(Game(name, genre, platform))
     return redirect(url_for('index'))
 
 
