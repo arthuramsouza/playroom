@@ -2,8 +2,8 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_mysqldb import MySQL
 
-from dao import GameDAO
-from models import Game, User
+from dao import GameDAO, UserDAO
+from models import Game
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
@@ -11,14 +11,7 @@ app.config.from_object('config')
 db = MySQL(app)
 
 game_dao = GameDAO(db)
-
-user1 = User('arthur', 'Arthur Menezes', '1234')
-user2 = User('admin', 'Admin', 'admin')
-user3 = User('masterchief', 'John-117', 'cortana')
-
-users = {user1.username: user1,
-         user2.username: user2,
-         user3.username: user3}
+user_dao = UserDAO(db)
 
 
 @app.route('/')
@@ -35,8 +28,8 @@ def login():
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
     next_page = request.form['next_page']
-    if request.form['username'] in users:
-        user = users[request.form['username']]
+    user = user_dao.search_by_id(request.form['username'])
+    if user:
         if request.form['password'] == user.password:
             session['logged_user'] = user.username
             flash('{}, you are now logged in!'.format(user.name), 'success')
