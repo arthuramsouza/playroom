@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, send_from_directory, session, url_for
 from flask_mysqldb import MySQL
 
 from dao import GameDAO, UserDAO
@@ -8,6 +8,7 @@ from models import Game
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
 app.config.from_object('config')
+# app.config['UPLOAD_PATH'] = os.path.dirname(os.path.abspath(__file__)) + os.sep + 'uploads'
 db = MySQL(app)
 
 game_dao = GameDAO(db)
@@ -59,7 +60,9 @@ def create():
     name = request.form['name']
     genre = request.form['genre']
     platform = request.form['platform']
-    game_dao.save(Game(name, genre, platform))
+    game = game_dao.save(Game(name, genre, platform))
+    artwork = request.files['artwork']
+    artwork.save('{}{}artwork_{}.jpg'.format(app.config['UPLOAD_PATH'], os.sep, game.id))
     return redirect(url_for('index'))
 
 
@@ -69,7 +72,7 @@ def edit(id):
         flash('You must login before editing a game.', 'danger')
         return redirect(url_for('login', next_page=url_for('edit', id=id)))
     game = game_dao.search_by_id(id)
-    return render_template('edit.html', title='Edit game', game=game)
+    return render_template('edit.html', title='Edit game', game=game, artwork='artwork_{}.jpg'.format(id))
 
 
 @app.route('/update', methods=['POST'])
@@ -80,6 +83,21 @@ def update():
     platform = request.form['platform']
     game_dao.save(Game(name, genre, platform, id))
     return redirect(url_for('index'))
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    if 'logged_user' not in session or session['logged_user'] is None:
+        flash('You must login before deleting a game.', 'danger')
+        return redirect(url_for('login', next_page=url_for('delete', id=id)))
+    game_dao.delete(id)
+    flash('The game has been deleted.', 'success')
+    return redirect(url_for('index'))
+
+
+@app.route('/uploads/<filename>')
+def image(filename):
+    return send_from_directory('uploads', filename)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,8 @@
 {% extends "template.html" %}
 {% block content %}
+    <div class="container" style="padding: 20px 0 20px 0">
+        <a class="btn btn-primary" href="{{ url_for('new') }}"><i class="fas fa-plus"></i> New game</a>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -18,7 +21,10 @@
                     <td>{{ game.platform }}</td>
                     <td>
                         <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit', id=game.id) }}" role="button">
-                            <i class="far fa-edit"></i>
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('delete', id=game.id) }}" role="button">
+                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>

@@ -1,6 +1,12 @@
 {% extends "template.html" %}
 {% block content %}
-    <form action="{{ url_for('create') }}" method="post">
+    <form action="{{ url_for('create') }}" method="post" enctype="multipart/form-data">
+        <figure>
+            <img alt="No artwork" src="{{ url_for('image', filename='default.jpg') }}"/>
+            <figcaption>
+                <input type="file" id="artwork" name="artwork" accept=".jpg"/>
+            </figcaption>
+        </figure>
         <fieldset>
             <div class="form-group">
                 <label for="name">Name</label>
@@ -15,6 +21,7 @@
                 <input type="text" id="platform" name="platform" class="form-control"/>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
         </fieldset>
     </form>
 {% endblock %}
