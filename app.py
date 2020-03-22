@@ -63,5 +63,24 @@ def create():
     return redirect(url_for('index'))
 
 
+@app.route('/edit/<int:id>')
+def edit(id):
+    if 'logged_user' not in session or session['logged_user'] is None:
+        flash('You must login before editing a game.', 'danger')
+        return redirect(url_for('login', next_page=url_for('edit', id=id)))
+    game = game_dao.search_by_id(id)
+    return render_template('edit.html', title='Edit game', game=game)
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    id = request.form['id']
+    name = request.form['name']
+    genre = request.form['genre']
+    platform = request.form['platform']
+    game_dao.save(Game(name, genre, platform, id))
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
     app.run()

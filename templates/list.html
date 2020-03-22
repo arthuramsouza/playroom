@@ -7,6 +7,7 @@
                     <th>Name</th>
                     <th>Genre</th>
                     <th>Platform</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -15,6 +16,11 @@
                     <td>{{ game.name }}</td>
                     <td>{{ game.genre }}</td>
                     <td>{{ game.platform }}</td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit', id=game.id) }}" role="button">
+                            <i class="far fa-edit"></i>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
