@@ -1,5 +1,6 @@
 import os
 
+SECRET_KEY = os.urandom(16)
 MYSQL_HOST = '0.0.0.0'
 MYSQL_PORT = 3306
 MYSQL_DB = 'playroom'

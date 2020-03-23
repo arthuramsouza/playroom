@@ -26,4 +26,4 @@ The listing (available at the index route) is displayed to everyone, logged in o
 
 ## Data storage
 
-All structured data related to users and video games are stored in a relational database (MySQL), while the image files for the artwork of the video games are stored in the server (```/upload/``` directory).
+All structured data related to users and video games are stored in a relational database (MySQL), while the image files for the artwork of the video games are stored in the server (```/uploads/``` directory).
