@@ -81,7 +81,9 @@ def update():
     name = request.form['name']
     genre = request.form['genre']
     platform = request.form['platform']
-    game_dao.save(Game(name, genre, platform, id))
+    game = game_dao.save(Game(name, genre, platform, id))
+    artwork = request.files['artwork']
+    artwork.save('{}{}artwork_{}.jpg'.format(app.config['UPLOAD_PATH'], os.sep, game.id))
     return redirect(url_for('index'))
 
 

@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="pb-2 mt-4 mb-2 border-bottom">
+        <div class="page-header">
             <h1><i class="fas fa-gamepad"></i> {{ title }}</h1>
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -23,5 +23,7 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='app.js')}}"></script>
 </body>
 </html>

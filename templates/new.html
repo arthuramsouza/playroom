@@ -1,8 +1,8 @@
 {% extends "template.html" %}
 {% block content %}
     <form action="{{ url_for('create') }}" method="post" enctype="multipart/form-data">
-        <figure>
-            <img alt="No artwork" src="{{ url_for('image', filename='default.jpg') }}"/>
+        <figure class="thumb col-md-4">
+            <img class="img-responsive" alt="No artwork" src="{{ url_for('image', filename='default.jpg') }}"/>
             <figcaption>
                 <input type="file" id="artwork" name="artwork" accept=".jpg"/>
             </figcaption>

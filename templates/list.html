@@ -20,10 +20,10 @@
                     <td>{{ game.genre }}</td>
                     <td>{{ game.platform }}</td>
                     <td>
-                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit', id=game.id) }}" role="button">
+                        <a class="btn btn-primary btn-sm" href="{{ url_for('edit', id=game.id) }}" role="button">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-outline-danger btn-sm" href="{{ url_for('delete', id=game.id) }}" role="button">
+                        <a class="btn btn-danger btn-sm" href="{{ url_for('delete', id=game.id) }}" role="button">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>
